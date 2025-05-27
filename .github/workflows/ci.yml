@@ -1,36 +1,38 @@
-name: CI/CD
+name: Vue.js CI/CD to Netlify
 
-on: 
+on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ '*' ]
+    branches:
+      - '*'
 
-  jobs:
-    build-and-deploy:
-      runs-on: ubuntu-latest
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-        - name: Use Node.jobs
-          uses: actions/setup-node@v3
-          with: 
-            node.version: 20
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-        - name: Install dependencies
-          run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-        - name: Build Vue app
-          run: npm run build
+      - name: Build Vue app
+        run: npm run build
 
-        - name: Deploy to Netlify
-          uses: nwtgck/actions-netlify@v1.2
-          with:
-            publish-dir: ./dist
-            production-branch: main
-            netlify-auth-token: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-            netlify-site-id: ${{ secrets.NETLIFY_SITE_ID }}
-          
-
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: ./dist
+          production-branch: main
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
