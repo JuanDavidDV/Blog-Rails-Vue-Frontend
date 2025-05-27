@@ -1,7 +1,8 @@
 import { ref, onMounted } from "vue";
 
 const API_URL = import.meta.env.VITE_API_URL + "/posts";
-console.log(API_URL);
+console.log("API URL:", import.meta.env.VITE_API_URL);
+
 const posts = ref([]);
 const title = ref("");
 const body = ref("");
