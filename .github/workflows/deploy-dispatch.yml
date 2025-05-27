@@ -1,12 +1,8 @@
-name: Vue.js CI/CD to Netlify
+name: Deploy on Backend Trigger
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - '*'
+  repository_dispatch:
+    types: [trigger-frontend-deploy]
 
 jobs:
   build-and-deploy:
